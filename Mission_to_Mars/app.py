@@ -1,5 +1,5 @@
 # Import dependencies 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
 import scrape_mars
 
@@ -14,17 +14,18 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_app")
 def index():
     # Write a statement that finds all the items in the db and returns them
     mars_data = mongo.db.mars_data.find()
-
+    print("MARS DATA", mars_data)
     # Render an index.html template and pass it the data you retrieved from the database
-    return render_template("index.html", mars_data = mars_data)
+    return render_template("CodeIndex.html", mars_data = mars_data)
 
 @app.route("/scrape")
 def scrape():
     # Write a statement that finds all the items in the db and returns them
-    mars = mongo.db.mars_data.find()
+    mars = mongo.db.mars_data
 
     # Run the scrape function
     mars_data = scrape_mars.scrape()
+    print("MARS DATA", mars_data)
 
     # Update the Mongo database using update and upsert=True
     mars.update(
@@ -33,7 +34,7 @@ def scrape():
         upsert=True
     )
 
-     # Redirect back to index page
+    # Redirect back to index page
     return redirect("/", code=302)
 
 if __name__ == "__main__":

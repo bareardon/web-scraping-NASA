@@ -25,14 +25,14 @@
         <div class="col-md-12 offset-md-1">
             <h3 class="heading">Latest Mars News</h3>
             <h4 class="heading">{{mars_data.news_title}}</h4>
-            <h5>{{mars_data.news_p}}</h5>
+            <p>{{mars_data.news_p}}</p>
         </div>
      </div>
     </br>
      <!-- Featured Mars Image-->
      <div class="container">
       <div class="row">
-          <div class="col-md-6 offset-md-1" style="background-color:white">
+          <div class="col-md-12 offset-md-1">
             <h3> Featured Mars Image</h3>
             <hr></hr>
             <div class="thumbnail">
@@ -44,21 +44,14 @@
   </br>
 
     <!-- Mars Facts Table-->
-    <div class="container">
-        <div class="row">
-          <div class="col-md-4" style="background-color:white">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <div class="caption">
-                <h3 class='text-right'>Mars Facts</h3>
-                  <p>{{mars_data.html_table | safe}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="col-md-4">
+      <!-- Mars Facts -->
+      <div class="row" id="mars-facts">
+        <h4>Mars Facts</h4>
+        {{ html_table | safe }}
       </div>
     </div>
-    <hr>
+  </div>
 
     <!-- Mars Hemisphere Images-->
     <h3 style="padding-top: 25px; margin-top: 25px; text-align: center;">Mars Hemispheres</h3>
@@ -67,9 +60,9 @@
         {% for image in mars_data.hemisphere_image_urls %}
         <div class="col mb-4">
           <div class="card">
-            <img src="{{image.img_url}}" class="card-img-top img-responsive img-rounded" alt="Mars Hemispheres">
+            <img src="{{images_img_url}}" class="card-img-top img-responsive img-rounded" alt="Mars Hemispheres">
             <div class="card-body">
-              <p class="card-text" style = "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{ image.title }}</p>
+              <p class="card-text" style = "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{ images.title }}</p>
             </div>
           </div>
         </div>

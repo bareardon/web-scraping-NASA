@@ -15,10 +15,11 @@ import requests
 def init_browser():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
+    return browser
 
 def scrape():
     browser = init_browser()
-    mars_dict = {}
+    mars_data = {}
 
     try:
         # Vist the NASA Mars News Site
