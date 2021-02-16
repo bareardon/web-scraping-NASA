@@ -43,16 +43,16 @@ def scrape():
         news_p = latest_news.find('div', class_="article_teaser_body").text
 
         # Store data in a dictionary 
-        mars_dict["news_title"] = news_title
-        mars_dict["news_p"] = news_p
+        mars_data["news_title"] = news_title
+        mars_data["news_p"] = news_p
 
         # Print if all is successful 
         print('Space news success.')
         
     except:
         # Store data in a dictionary 
-        mars_dict["news_title"] = '1news_title'
-        mars_dict["news_p"] = '2news_p'
+        mars_data["news_title"] = '1news_title'
+        mars_data["news_p"] = '2news_p'
 
         # Print if all is successful 
         print('Space news failure.')
@@ -75,17 +75,17 @@ def scrape():
         featured_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/'+ image_url
 
         # Store data in a dictionary 
-        mars_dict["featured_image_url"] = featured_image_url
+        mars_data["featured_image_url"] = featured_image_url
 
         # Print if all is successful 
         print('Featured image successful')
     
     except:
          # Store data in a dictionary
-         mars_dict["featured_image_url"] = '1featured_image_url'
+         mars_data["featured_image_url"] = '1featured_image_url'
 
-        # Print if there is a failure 
-        print('Featured image failure')
+         # Print if there is a failure 
+         print('Featured image failure.')
                                          
     try:
         # Visit the Mars Facts webpage
@@ -114,15 +114,15 @@ def scrape():
         # Strip unwanted newlines to clean up the table
         html_table.replace('\n', '')
 
-         # Store data in a dictionary 
-         mars_dict['html_table'] = html_table
+        # Store data in a dictionary 
+        mars_data['html_table'] = html_table
 
-         # Print if all is successful 
-         print('Mars facts successful')
+        # Print if all is successful 
+        print('Mars facts successful')
 
     except:
         # Store data in a dictionary 
-         mars_dict['html_table'] = '1html_table'
+         mars_data['html_table'] = '1html_table'
 
          # Print if there is a failure 
          print('Mars facts failure')
@@ -144,42 +144,42 @@ def scrape():
         mars_hemisphere_url = 'https://astrogeology.usgs.gov/'
         hemisphere_location = astro_soup.find_all('div', class_='item')
 
-            # Obtain high resolution images for each of Mar's hemispheres
-            for results in hemisphere_location:
-                mars = results.find('h3').text
-                browser.links.find_by_partial_text(mars).click()
+        # Obtain high resolution images for each of Mar's hemispheres
+        for results in hemisphere_location:
+            mars = results.find('h3').text
+            browser.links.find_by_partial_text(mars).click()
+            time.sleep(1)
+                
+            html = browser.html
+            astro_soup = BeautifulSoup(html, 'html.parser')
+            partial_image = astro_soup.find('img', class_='wide-image')['src']
+                
+            img_url = mars_hemisphere_url + partial_image
+                
+            # Create dictionary lists
+            hemisphere_image_urls.append({
+                'title': mars,
+                'img_url': img_url
+            })
+                
+            count += 1
+                
+            if len(hemisphere_location)>count:
+                browser.back()
                 time.sleep(1)
-                
-                html = browser.html
-                astro_soup = BeautifulSoup(html, 'html.parser')
-                partial_image = astro_soup.find('img', class_='wide-image')['src']
-                
-                img_url = mars_hemisphere_url + partial_image
-                
-                # Create dictionary lists
-                hemisphere_image_urls.append({
-                    'title': mars,
-                    'img_url': img_url
-                })
-                
-                count += 1
-                
-                if len(hemisphere_location)>count:
-                    browser.back()
-                    time.sleep(1)
                     
-                else:
-                    break 
+            else:
+                break 
                 
          # Store data in a dictionary 
-        mars_dict['hemisphere_image_urls'] = hemisphere_image_urls
+        mars_data['hemisphere_image_urls'] = hemisphere_image_urls
 
         # Print if all is successful
         print('Mars hemisphere is successful')
 
     except:
         # Store data in a dictionary 
-        mars_dict['hemisphere_image_urls'] = '1hemisphere_image_urls'
+        mars_data['hemisphere_image_urls'] = '1hemisphere_image_urls'
     
         # Print if there is a failure 
         print('Mars hemisphere failure')
@@ -191,7 +191,7 @@ def scrape():
     # Scraping complete
     print('Scraping complete')
 
-    return mars_dict
+    return mars_data
 
 
 
