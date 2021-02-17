@@ -11,7 +11,7 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
   </head>
-  <body>
+  <body style="background-color: lightgrey">
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <div class="jumbotron text-center">
@@ -64,8 +64,8 @@
     
           <div class="row">
           {% for dictionary in mars_data.hemisphere_image_urls %}
-            <div class="col-mb-6">
-                <img src="{{dictionary.img_url}}" class="card-img-top" alt="Mars Hemispheres">
+            <div class="col-md-6">
+                <img src="{{dictionary.img_url}}" class="card-img-top" alt="Mars Hemispheres" style="max-width: 100%; max-height: 100%">
                   <p class="card-text" style = "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{ dictionary.title }}</p>
             </div>
           {% endfor %}
